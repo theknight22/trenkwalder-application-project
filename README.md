@@ -62,8 +62,9 @@ Static document answers live in `src/static`.
 - `loader.ts` reads `.txt`, `.md`, `.pdf` files and normalizes it.
 - `search.ts` chunks the content, builds a small TF-IDF index, retrieves matching chunks, and turns the best ones into an answer with citations.
 
-The dynamic answers are are done by the chatbot flow. 
-If a question looks like a vacation or sick-day balance question, and has an employee ID, then the chatbot calls the HR client instead of searching documents.
+Dynamic answers are handled by the chatbot in `src/chatbot.ts`.
+Static questions go through TF-IDF retrieval over the loaded documents.
+Dynamic balance questions only go to the HR service when the question has stronger phrasing such as `left`, `remaining`, `balance`, `do I have`, or `my vacation`.
 
 The external service is mocked, but it still behaves like a real HTTP dependency:
 
@@ -89,6 +90,19 @@ I used TF-IDF because it is simple, offline, and good enough for this demo. For 
 For this assignment, the only live-data intent is employee leave balance, so a few keyword checks are easier to review and debug than a classifier.
 
 The HR API is separated behind `HrServiceClient` so the chatbot does not care whether the data comes from JSON, a mock server, or a real HR system.
+
+## Project structure
+
+- `src/static` handles document loading, chunking, and retrieval for `.txt`, `.md`, and `.pdf` files.
+- `src/dynamic` contains the HR service client and the mocked API.
+- `src/chatbot.ts` coordinates intent routing and chooses between the static retrieval and dynamic calls.
+
+## What I would improve with more time
+
+- Improve retrieval quality with better ranking, chunk metadata, and possibly embeddings for larger document number.
+- Add better intent detection so routing depends less on simple keyword rules.
+- Support OCR or image based PDFs instead of assuming all PDFs are text based.
+- Add authentication and employee context for a more realistic dynamic HR integration.
 
 ## Tests
 

@@ -9,7 +9,12 @@ const PORT = Number(process.env.PORT ?? "3000");
 // Starts the web server, mounts API routes, and serves the UI.
 async function start(): Promise<void> {
 
-  const chatbot = await bootstrapChatbot();
+
+  const hrServiceBaseUrl = process.env.HR_SERVICE_BASE_URL ?? `http://127.0.0.1:${PORT}`;
+  const chatbot = await bootstrapChatbot(
+    undefined,
+    hrServiceBaseUrl
+  );
 
   const app = express();
   app.use(express.json());

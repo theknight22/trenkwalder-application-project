@@ -1,0 +1,82 @@
+{
+  "employees": [
+    {
+      "employeeId": "E001",
+      "vacationDaysRemaining": 14,
+      "sickDaysRemaining": 8,
+      "lastUpdated": "2026-04-20"
+    },
+    {
+      "employeeId": "E002",
+      "vacationDaysRemaining": 7,
+      "sickDaysRemaining": 4,
+      "lastUpdated": "2026-04-20"
+    },
+    {
+      "employeeId": "E003",
+      "vacationDaysRemaining": 18,
+      "sickDaysRemaining": 10,
+      "lastUpdated": "2026-04-20"
+    },
+    {
+      "employeeId": "E004",
+      "vacationDaysRemaining": 11,
+      "sickDaysRemaining": 6,
+      "lastUpdated": "2026-04-22"
+    },
+    {
+      "employeeId": "E005",
+      "vacationDaysRemaining": 3,
+      "sickDaysRemaining": 9,
+      "lastUpdated": "2026-04-18"
+    },
+    {
+      "employeeId": "E006",
+      "vacationDaysRemaining": 20,
+      "sickDaysRemaining": 2,
+      "lastUpdated": "2026-04-24"
+    },
+    {
+      "employeeId": "E007",
+      "vacationDaysRemaining": 6,
+      "sickDaysRemaining": 5,
+      "lastUpdated": "2026-04-16"
+    },
+    {
+      "employeeId": "E008",
+      "vacationDaysRemaining": 15,
+      "sickDaysRemaining": 7,
+      "lastUpdated": "2026-04-25"
+    },
+    {
+      "employeeId": "E009",
+      "vacationDaysRemaining": 1,
+      "sickDaysRemaining": 3,
+      "lastUpdated": "2026-04-12"
+    },
+    {
+      "employeeId": "E010",
+      "vacationDaysRemaining": 9,
+      "sickDaysRemaining": 11,
+      "lastUpdated": "2026-04-21"
+    },
+    {
+      "employeeId": "E011",
+      "vacationDaysRemaining": 13,
+      "sickDaysRemaining": 4,
+      "lastUpdated": "2026-04-23"
+    },
+    {
+      "employeeId": "E012",
+      "vacationDaysRemaining": 5,
+      "sickDaysRemaining": 8,
+      "lastUpdated": "2026-04-19"
+    },
+    {
+      "employeeId": "E013",
+      "vacationDaysRemaining": 17,
+      "sickDaysRemaining": 6,
+      "lastUpdated": "2026-04-26"
+    }
+  ]
+}

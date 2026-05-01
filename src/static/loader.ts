@@ -7,6 +7,7 @@ import { normalizeWhitespace } from "../utils/text";
 
 const SUPPORTED_EXTENSIONS = new Set([".txt", ".md", ".pdf"]);
 
+// Loads supported documents from a directory and returns normalized text content.
 export async function loadDocumentsFromDirectory(directoryPath: string): Promise<LoadedDocument[]> {
 
   const entries = await fs.readdir(directoryPath, { withFileTypes: true });
@@ -33,6 +34,7 @@ export async function loadDocumentsFromDirectory(directoryPath: string): Promise
   return documents;
 }
 
+// Extracts plain text from one file based on extension.
 async function extractContent(filePath: string, extension: string): Promise<string> {
 
   if (extension === ".txt") {

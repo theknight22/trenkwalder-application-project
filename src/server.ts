@@ -6,6 +6,7 @@ import type { ChatResponse } from "./types";
 
 const PORT = Number(process.env.PORT ?? "3000");
 
+// Starts the web server, mounts API routes, and serves the UI.
 async function start(): Promise<void> {
 
   const chatbot = await bootstrapChatbot();
@@ -16,6 +17,7 @@ async function start(): Promise<void> {
   const mockApiApp = createMockApiApp();
   app.use(mockApiApp);
 
+  // Handles chat requests from the frontend and returns a typed chatbot response.
   app.post("/api/chat", async (request, response) => {
 
     const { question } = request.body as { question?: string };

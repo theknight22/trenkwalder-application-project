@@ -40,8 +40,10 @@ const EMPLOYEE_LIST_PHRASES = [
 ];
 
 export class Chatbot {
+  // Stores service dependencies needed for static and dynamic answer paths.
   constructor(private readonly dependencies: ChatbotDependencies) { }
 
+  // Main entry for handling a user question and returning a typed chatbot response.
   async ask(question: string): Promise<ChatResponse> {
     const intent = routeDynamicIntent(question);
 
@@ -66,6 +68,7 @@ export class Chatbot {
     };
   }
 
+  // Handles all dynamic-intent questions by calling the HR service and formatting output.
   private async answerFromHrService(intent: DynamicIntent): Promise<ChatResponse> {
 
     if (intent.type === "employee_count") {
@@ -136,6 +139,7 @@ export class Chatbot {
   }
 }
 
+// Bootstraps the chatbot by loading docs, building the search index, and wiring the HR client.
 export async function bootstrapChatbot(
 
   docsDirectory = path.resolve(process.cwd(), "data", "docs"),
@@ -150,6 +154,7 @@ export async function bootstrapChatbot(
   return new Chatbot({ hrService, tfidfIndex });
 }
 
+// Classifies whether the question should use a dynamic HR endpoint and extracts employee ID.
 export function routeDynamicIntent(question: string): DynamicIntent {
 
   const normalized = question.toLowerCase();
@@ -172,6 +177,7 @@ export function routeDynamicIntent(question: string): DynamicIntent {
   return { type, employeeId };
 }
 
+// Extracts employee ID from supported question patterns.
 export function extractEmployeeId(question: string): string | null {
   const patterns = [
 
@@ -181,7 +187,6 @@ export function extractEmployeeId(question: string): string | null {
   ];
 
   for (const pattern of patterns) {
-
     const match = question.match(pattern);
     if (match?.[1]) return match[1].trim();
 

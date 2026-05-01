@@ -10,6 +10,7 @@ export class HrServiceError extends Error {
 
   public readonly code: HrServiceErrorCode;
 
+  // Creates a typed error used for consistent service error handling.
   constructor(code: HrServiceErrorCode, message: string) {
     super(message);
     this.name = "HrServiceError";
@@ -19,11 +20,13 @@ export class HrServiceError extends Error {
 
 export class HrServiceClient {
 
+  // Stores base URL and timeout used by all outbound HR API calls.
   constructor(
     private readonly baseUrl: string,
     private readonly timeoutMs = 2_000
   ) { }
 
+  // Fetches one employee's leave balances and validates payload shape.
   async getBalances(employeeId: string): Promise<EmployeeBalance> {
 
     const payload = (await this.fetchJson(
@@ -48,6 +51,7 @@ export class HrServiceClient {
     };
   }
 
+  // Fetches the total employee count summary and validates payload shape.
   async getEmployeeCount(): Promise<EmployeeCountResponse> {
 
     const payload = (await this.fetchJson("/employees/count")) as Partial<EmployeeCountResponse>;
@@ -62,6 +66,7 @@ export class HrServiceClient {
     };
   }
 
+  // Fetches a lightweight employee list and validates payload shape.
   async listEmployees(): Promise<EmployeeListResponse> {
 
     const payload = (await this.fetchJson("/employees")) as Partial<EmployeeListResponse>;
@@ -86,6 +91,7 @@ export class HrServiceClient {
     };
   }
 
+  // Shared HTTP request helper with timeout, status mapping, and JSON parsing.
   private async fetchJson(endpoint: string, notFoundMessage?: string): Promise<unknown> {
 
     const url = `${this.baseUrl.replace(/\/$/, "")}${endpoint}`;
@@ -121,6 +127,7 @@ export class HrServiceClient {
   }
 }
 
+// Converts unknown thrown values to readable strings for error messages.
 function formatError(error: unknown): string {
   if (error instanceof Error) {
     return error.message;

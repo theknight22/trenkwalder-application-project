@@ -21,11 +21,13 @@ const DEFAULT_EMPLOYEE_DATA_PATH = path.resolve(
   "employees.json"
 );
 
+// Creates the mock HR API app with count, list, and balance endpoints.
 export function createMockApiApp(dataFilePath = DEFAULT_EMPLOYEE_DATA_PATH): Express {
 
   const app = express();
   app.use(express.json());
 
+  // Returns total employee count and latest update timestamp.
   app.get("/employees/count", async (_, response) => {
 
     try {
@@ -41,6 +43,7 @@ export function createMockApiApp(dataFilePath = DEFAULT_EMPLOYEE_DATA_PATH): Exp
     }
   });
 
+  // Returns a compact list of employee IDs plus metadata.
   app.get("/employees", async (_, response) => {
 
     try {
@@ -57,6 +60,7 @@ export function createMockApiApp(dataFilePath = DEFAULT_EMPLOYEE_DATA_PATH): Exp
     }
   });
 
+  // Returns leave balances for one employee by ID.
   app.get("/employees/:id/balances", async (request, response) => {
 
     try {
@@ -86,6 +90,7 @@ export function createMockApiApp(dataFilePath = DEFAULT_EMPLOYEE_DATA_PATH): Exp
   return app;
 }
 
+// Starts the standalone mock API HTTP server.
 export async function startMockApiServer(
   port = 4000,
   dataFilePath = DEFAULT_EMPLOYEE_DATA_PATH
@@ -101,12 +106,14 @@ export async function startMockApiServer(
   });
 }
 
+// Reads and parses the JSON employee dataset from disk.
 async function readEmployees(filePath: string): Promise<EmployeeRecord[]> {
   const raw = await fs.readFile(filePath, "utf8");
   const parsed = JSON.parse(raw) as EmployeesDbShape;
   return parsed.employees;
 }
 
+// Computes the latest lastUpdated value across all employee records.
 function getLatestUpdatedDate(employees: EmployeeRecord[]): string {
   if (employees.length === 0) {
     return "";
@@ -117,6 +124,7 @@ function getLatestUpdatedDate(employees: EmployeeRecord[]): string {
     .reduce((latest, current) => (current > latest ? current : latest));
 }
 
+// Converts unknown thrown values to readable strings for API error responses.
 function formatError(error: unknown): string {
   if (error instanceof Error) {
     return error.message;

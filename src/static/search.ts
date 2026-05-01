@@ -28,6 +28,7 @@ const DEFAULT_OVERLAP = 150;
 const DEFAULT_TOP_K = 3;
 const DEFAULT_MIN_SCORE = 0.1;
 
+// Splits loaded documents into overlapping chunks for retrieval.
 export function chunkDocuments(documents: LoadedDocument[], options: ChunkOptions = {}): DocumentChunk[] {
 
   const chunkSize = options.chunkSize ?? DEFAULT_CHUNK_SIZE;
@@ -40,6 +41,7 @@ export function chunkDocuments(documents: LoadedDocument[], options: ChunkOption
   return documents.flatMap((document) => chunkOneDocument(document, chunkSize, overlap));
 }
 
+// Chunks a single document while preserving source metadata in chunk IDs.
 function chunkOneDocument(document: LoadedDocument, chunkSize: number, overlap: number): DocumentChunk[] {
 
   const chunks: DocumentChunk[] = [];
@@ -68,6 +70,7 @@ function chunkOneDocument(document: LoadedDocument, chunkSize: number, overlap: 
 }
 
 // TF-IDF is basic, but for this demo easy to run.
+// Builds a TF-IDF index from chunks for lexical similarity search.
 export function buildTfidfIndex(chunks: DocumentChunk[]): TfidfIndex {
 
   const tokenizedChunks = chunks.map((chunk) => tokenize(chunk.text));
@@ -94,6 +97,7 @@ export function buildTfidfIndex(chunks: DocumentChunk[]): TfidfIndex {
   };
 }
 
+// Returns top matching chunks for a question using cosine similarity over TF-IDF vectors.
 export function retrieveRelevantChunks(
   index: TfidfIndex,
   question: string,
@@ -117,6 +121,7 @@ export function retrieveRelevantChunks(
   return matches.sort((a, b) => b.score - a.score).slice(0, topK);
 }
 
+// Builds the final static answer text and citation list from retrieved chunks.
 export function buildStaticAnswer(question: string, matches: RetrievalMatch[]): StaticAnswerPayload {
 
   const queryTokens = new Set(tokenize(question));
@@ -147,6 +152,7 @@ export function buildStaticAnswer(question: string, matches: RetrievalMatch[]): 
   };
 }
 
+// Converts tokens to a weighted vector using normalized term frequency and IDF scores.
 function buildVector(tokens: string[], idf: Map<string, number>): TermVector {
 
   const frequencies = termFrequency(tokens);
@@ -165,6 +171,7 @@ function buildVector(tokens: string[], idf: Map<string, number>): TermVector {
   return { weights, norm: Math.sqrt(normSquare) };
 }
 
+// Computes normalized term frequency for each token in a sequence.
 function termFrequency(tokens: string[]): Map<string, number> {
 
   const counts = new Map<string, number>();
@@ -178,6 +185,7 @@ function termFrequency(tokens: string[]): Map<string, number> {
   return counts;
 }
 
+// Computes cosine similarity between query and document vectors.
 function cosineSimilarity(
   queryWeights: Map<string, number>,
   queryNorm: number,
@@ -194,6 +202,7 @@ function cosineSimilarity(
   return dotProduct / (queryNorm * documentVector.norm);
 }
 
+// Removes duplicate sentences while preserving order.
 function dedupe(sentences: string[]): string[] {
 
   const seen = new Set<string>();

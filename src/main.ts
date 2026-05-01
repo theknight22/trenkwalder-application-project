@@ -2,6 +2,7 @@ import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { bootstrapChatbot } from "./chatbot";
 
+// Runs the interactive CLI loop that accepts questions and prints responses.
 async function runCli(): Promise<void> {
 
   const chatbot = await bootstrapChatbot();

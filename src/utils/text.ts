@@ -30,10 +30,12 @@ const STOP_WORDS = new Set([
   "with"
 ]);
 
+// Normalizes whitespace by collapsing runs and trimming ends.
 export function normalizeWhitespace(text: string): string {
   return text.replace(/\s+/g, " ").trim();
 }
 
+// Tokenizes free text into searchable lowercase terms with simple stop-word filtering.
 export function tokenize(text: string): string[] {
   const normalized = text
     .toLowerCase()
@@ -50,6 +52,7 @@ export function tokenize(text: string): string[] {
     .filter((token) => token.length > 1 && !STOP_WORDS.has(token));
 }
 
+// Splits text into sentence-like chunks used by static answer selection.
 export function toSentenceCandidates(text: string): string[] {
   return text
     .split(/(?<=[.!?])\s+/)

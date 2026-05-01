@@ -24,7 +24,7 @@ const BALANCE_WORDS = [
   "balance",
   "remaining",
   "left",
-  "days"
+  "has",
 ];
 const EMPLOYEE_COUNT_PHRASES = [
   "how many employees",

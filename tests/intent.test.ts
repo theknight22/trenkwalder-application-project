@@ -33,6 +33,11 @@ describe("intent detection", () => {
     expect(intent.type).toBeNull();
   });
 
+  it("keeps vacation policy questions on the static path", () => {
+    const intent = routeDynamicIntent("How many vacation days can be carried over?");
+    expect(intent.type).toBeNull();
+  });
+
   it("extracts employee ID from supported patterns", () => {
     expect(extractEmployeeId("for employee E003")).toBe("E003");
     expect(extractEmployeeId("employee:E003")).toBe("E003");
